@@ -7,7 +7,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +40,8 @@ public class MainActivity extends Activity {
 	private Card firstCard;
 	private Card seconedCard;
 	private ButtonListener buttonListener;
+	private int matchCount;
+	private int matchMax;
 	
 	private static Object lock = new Object();
 	
@@ -96,18 +100,23 @@ public class MainActivity extends Activity {
 	  			switch (pos) {
 				case 1:
 					x=4;y=4;
+					matchMax = 8;
 					break;
 				case 2:
 					x=4;y=5;
+					matchMax = 10;
 					break;
 				case 3:
 					x=4;y=6;
+					matchMax = 12;
 					break;
 				case 4:
 					x=5;y=6;
+					matchMax = 15;
 					break;
 				case 5:
 					x=6;y=6;
+					matchMax = 18;
 					break;
 				default:
 					return;
@@ -129,7 +138,7 @@ public class MainActivity extends Activity {
 	 private void newGame(int c, int r) {
 	    	ROW_COUNT = r;
 	    	COL_COUNT = c;
-	    	
+	    	matchCount = 0;
 	    	cards = new int [COL_COUNT] [ROW_COUNT];
 	    	
 	    	
@@ -306,6 +315,26 @@ public class MainActivity extends Activity {
     	    	if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
     				firstCard.button.setVisibility(View.INVISIBLE);
     				seconedCard.button.setVisibility(View.INVISIBLE);
+    				matchCount++;
+    				if (matchCount == matchMax) {
+    					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+    			        builder.setTitle("You Win!")
+    			        .setMessage("Would you like to play again?")
+    			        .setCancelable(false)
+    			        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+    			            public void onClick(DialogInterface dialog, int id) {
+    			                //TODO
+    			            }
+    			        })
+    			        .setNegativeButton("No",new DialogInterface.OnClickListener() {
+    			            public void onClick(DialogInterface dialog, int id) {
+    			            	System.exit(0);
+    			            }
+    			        });
+    			        AlertDialog alert = builder.create();
+    			        alert.show();
+    			    
+    				}
     			}
     			else {
     				seconedCard.button.setBackgroundDrawable(backImage);

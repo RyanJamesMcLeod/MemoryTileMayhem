@@ -13,5 +13,7 @@
         <item>5 X 6</item>
         <item>6 X 6</item>
     </string-array>
+    
+    <string name="ok">OK</string>
 
 </resources>
