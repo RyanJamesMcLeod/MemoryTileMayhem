@@ -15,6 +15,16 @@
         <item>6 X 7</item>
     </string-array>
     
+    <string-array name="pack">
+        <item>Select a Package (Default is Sample)</item>
+        <item>Sample</item>
+        <item>Pokemon</item>
+    </string-array>
+    
     <string name="ok">OK</string>
+    
+    <string name="memorygame">The Awesome Memory Game</string>
+    
+    <string name="memory_tile_mayhem">Welcome to Memory Tile Mayhem!</string>
 
 </resources>

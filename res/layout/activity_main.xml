@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Welcome to Memory Tile Mayhem!"
+            android:text="@string/memory_tile_mayhem"
             android:textSize="17sp"
             android:visibility="visible" />
 
@@ -68,7 +68,7 @@
             android:layout_gravity="center"
             android:bufferType="normal"
             android:gravity="center"
-            android:text="TextView"
+            android:text="@string/memorygame"
             android:typeface="normal" />
 
     </TableRow>
@@ -80,6 +80,11 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:gravity="center_horizontal" >
+
+        <Spinner
+            android:id="@+id/packageSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </TableRow>
 

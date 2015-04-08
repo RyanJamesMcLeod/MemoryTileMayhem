@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
 	private int [] [] cards;
 	private List<Drawable> images;
 	private Card firstCard;
-	private Card seconedCard;
+	private Card secondCard;
 	private ButtonListener buttonListener;
 	private int matchCount;
 	private int matchMax;
@@ -77,6 +77,46 @@ public class MainActivity extends Activity {
         
         
         context  = mainTable.getContext();
+        
+        Spinner p = (Spinner) findViewById(R.id.packageSpinner);
+        ArrayAdapter<?> packageadapter = ArrayAdapter.createFromResource(
+                this, R.array.pack, android.R.layout.simple_spinner_item);
+        packageadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        p.setAdapter(packageadapter);
+        
+        //
+        p.setOnItemSelectedListener(new OnItemSelectedListener(){
+        	
+	    	  @Override
+	    	  public void onItemSelected(
+	    			  android.widget.AdapterView<?> arg0, 
+	    			  View arg1, int pos, long arg3){
+	    		  
+	    		  ((Spinner) findViewById(R.id.GameSpinner)).setSelection(0);
+	    		  
+	  			switch (pos) {
+				case 1:
+					imageSelect = "sample";
+					break;
+				case 2:
+					imageSelect = "pokemon";
+					break;
+				
+				default:
+					return;
+				}
+	  			
+	  		}
+
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+	  	});
+        //
         
        	 Spinner s = (Spinner) findViewById(R.id.GameSpinner);
 	        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
@@ -170,7 +210,7 @@ public class MainActivity extends Activity {
 	 private void loadImages() {
 	    	images = new ArrayList<Drawable>();
 	    	
-	    	if (imageSelect == "sample") {
+	    	if (imageSelect == "pokemon") {
 	    		images.add(getResources().getDrawable(R.drawable.pcard1));
 		    	images.add(getResources().getDrawable(R.drawable.pcard2));
 		    	images.add(getResources().getDrawable(R.drawable.pcard3));
@@ -279,7 +319,7 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			
 			synchronized (lock) {
-				if(firstCard!=null && seconedCard != null){
+				if(firstCard!=null && secondCard != null){
 					return;
 				}
 				int id = v.getId();
@@ -304,7 +344,7 @@ public class MainActivity extends Activity {
 					return; //the user pressed the same card
 				}
 					
-				seconedCard = new Card(button,x,y);
+				secondCard = new Card(button,x,y);
 				
 				turns++;
 				((TextView)findViewById(R.id.TextViewBlank)).setText("Tries: "+turns);
@@ -344,9 +384,9 @@ public class MainActivity extends Activity {
     	}
     	 @SuppressWarnings("deprecation")
 		public void checkCards(){
-    	    	if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
+    	    	if(cards[secondCard.x][secondCard.y] == cards[firstCard.x][firstCard.y]){
     				firstCard.button.setVisibility(View.INVISIBLE);
-    				seconedCard.button.setVisibility(View.INVISIBLE);
+    				secondCard.button.setVisibility(View.INVISIBLE);
     				matchCount++;
     				if (matchCount == matchMax) {
     					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -369,12 +409,12 @@ public class MainActivity extends Activity {
     				}
     			}
     			else {
-    				seconedCard.button.setBackgroundDrawable(backImage);
+    				secondCard.button.setBackgroundDrawable(backImage);
     				firstCard.button.setBackgroundDrawable(backImage);
     			}
     	    	
     	    	firstCard=null;
-    			seconedCard=null;
+    			secondCard=null;
     	    }
     }
 
