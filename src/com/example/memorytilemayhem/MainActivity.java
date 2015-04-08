@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -16,8 +16,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -80,7 +78,7 @@ public class MainActivity extends Activity {
         context  = mainTable.getContext();
         
        	 Spinner s = (Spinner) findViewById(R.id.GameSpinner);
-	        ArrayAdapter adapter = ArrayAdapter.createFromResource(
+	        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
 	                this, R.array.type, android.R.layout.simple_spinner_item);
 	        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	        s.setAdapter(adapter);
@@ -144,7 +142,7 @@ public class MainActivity extends Activity {
 	    	COL_COUNT = c;
 	    	matchCount = 0;
 	    	cards = new int [COL_COUNT] [ROW_COUNT];
-	    	
+	    	loadImages();
 	    	
 	    	mainTable.removeView(findViewById(R.id.TableRow03));
 	    	mainTable.removeView(findViewById(R.id.TableRow04));
@@ -195,7 +193,8 @@ public class MainActivity extends Activity {
 			
 		}
 	 
-	 private void loadCards(){
+	 @SuppressLint("UseValueOf")
+	private void loadCards(){
 			try{
 		    	int size = ROW_COUNT*COL_COUNT;
 		    	
@@ -240,7 +239,8 @@ public class MainActivity extends Activity {
          return row;
     }
     
-    private View createImageButton(int x, int y){
+    @SuppressWarnings("deprecation")
+	private View createImageButton(int x, int y){
     	Button button = new Button(context);
     	button.setBackgroundDrawable(backImage);
     	button.setId(100*x+y);
@@ -265,6 +265,8 @@ public class MainActivity extends Activity {
 			
 		}
 
+		@SuppressLint("HandlerLeak")
+		@SuppressWarnings("deprecation")
 		private void turnCard(Button button,int x, int y) {
 			button.setBackgroundDrawable(images.get(cards[x][y]));
 			
@@ -315,7 +317,8 @@ public class MainActivity extends Activity {
     			checkCards();
     		}
     	}
-    	 public void checkCards(){
+    	 @SuppressWarnings("deprecation")
+		public void checkCards(){
     	    	if(cards[seconedCard.x][seconedCard.y] == cards[firstCard.x][firstCard.y]){
     				firstCard.button.setVisibility(View.INVISIBLE);
     				seconedCard.button.setVisibility(View.INVISIBLE);
