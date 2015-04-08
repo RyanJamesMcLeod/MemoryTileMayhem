@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
 	private ButtonListener buttonListener;
 	private int matchCount;
 	private int matchMax;
+	private String imageSelect = "sample";
 	
 	private static Object lock = new Object();
 	
@@ -169,6 +170,30 @@ public class MainActivity extends Activity {
 	 private void loadImages() {
 	    	images = new ArrayList<Drawable>();
 	    	
+	    	if (imageSelect == "sample") {
+	    		images.add(getResources().getDrawable(R.drawable.pcard1));
+		    	images.add(getResources().getDrawable(R.drawable.pcard2));
+		    	images.add(getResources().getDrawable(R.drawable.pcard3));
+		    	images.add(getResources().getDrawable(R.drawable.pcard4));
+		    	images.add(getResources().getDrawable(R.drawable.pcard5));
+		    	images.add(getResources().getDrawable(R.drawable.pcard6));
+		    	images.add(getResources().getDrawable(R.drawable.pcard7));
+		    	images.add(getResources().getDrawable(R.drawable.pcard8));
+		    	images.add(getResources().getDrawable(R.drawable.pcard9));
+		    	images.add(getResources().getDrawable(R.drawable.pcard10));
+		    	images.add(getResources().getDrawable(R.drawable.pcard11));
+		    	images.add(getResources().getDrawable(R.drawable.pcard12));
+		    	images.add(getResources().getDrawable(R.drawable.pcard13));
+		    	images.add(getResources().getDrawable(R.drawable.pcard14));
+		    	images.add(getResources().getDrawable(R.drawable.pcard15));
+		    	images.add(getResources().getDrawable(R.drawable.pcard16));
+		    	images.add(getResources().getDrawable(R.drawable.pcard17));
+		    	images.add(getResources().getDrawable(R.drawable.pcard18));
+		    	images.add(getResources().getDrawable(R.drawable.pcard19));
+		    	images.add(getResources().getDrawable(R.drawable.pcard20));
+		    	images.add(getResources().getDrawable(R.drawable.pcard21));
+	    	}
+	    	else {
 	    	images.add(getResources().getDrawable(R.drawable.card1));
 	    	images.add(getResources().getDrawable(R.drawable.card2));
 	    	images.add(getResources().getDrawable(R.drawable.card3));
@@ -190,7 +215,7 @@ public class MainActivity extends Activity {
 	    	images.add(getResources().getDrawable(R.drawable.card19));
 	    	images.add(getResources().getDrawable(R.drawable.card20));
 	    	images.add(getResources().getDrawable(R.drawable.card21));
-			
+	    	}
 		}
 	 
 	 @SuppressLint("UseValueOf")
