@@ -1,10 +1,12 @@
 package com.example.memorytilemayhem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,6 +43,15 @@ public class MainActivity extends Activity {
 	private int matchCount;
 	private int matchMax;
 	private String imageSelect = "sample";
+	private long startTime;
+	private long endTime;
+	private long timeDifference;
+	private long secondsInMilli = 1000;
+	private int score;
+	private int startingScore;
+	private double difficulty;
+	private int x;
+	private int y;
 	
 	private static Object lock = new Object();
 	
@@ -54,7 +65,6 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
         handler = new UpdateCardsHandler();
-        loadImages();
        
         
        backImage =  getResources().getDrawable(R.drawable.icon);
@@ -134,32 +144,36 @@ public class MainActivity extends Activity {
 	    		  
 	    		  ((Spinner) findViewById(R.id.GameSpinner)).setSelection(0);
 	    		  
-	  			int x,y;
-	  			
 	  			switch (pos) {
 				case 1:
 					x=4;y=4;
 					matchMax = 8;
+					difficulty = 1.0;
 					break;
 				case 2:
 					x=4;y=5;
 					matchMax = 10;
+					difficulty = 1.1;
 					break;
 				case 3:
 					x=4;y=6;
 					matchMax = 12;
+					difficulty = 1.3;
 					break;
 				case 4:
 					x=5;y=6;
 					matchMax = 15;
+					difficulty = 1.5;
 					break;
 				case 5:
 					x=6;y=6;
 					matchMax = 18;
+					difficulty = 1.7;
 					break;
 				case 6:
 					x=6;y=7;
 					matchMax = 21;
+					difficulty = 2.0;
 					break;
 				default:
 					return;
@@ -184,6 +198,8 @@ public class MainActivity extends Activity {
 	    	matchCount = 0;
 	    	cards = new int [COL_COUNT] [ROW_COUNT];
 	    	loadImages();
+	    	startTime = new Date().getTime();
+	    	startingScore = 1000;
 	    	
 	    	mainTable.removeView(findViewById(R.id.TableRow03));
 	    	mainTable.removeView(findViewById(R.id.TableRow04));
@@ -389,13 +405,17 @@ public class MainActivity extends Activity {
     				secondCard.button.setVisibility(View.INVISIBLE);
     				matchCount++;
     				if (matchCount == matchMax) {
+    					endTime = new Date().getTime();
+    					timeDifference = (endTime - startTime) / secondsInMilli ;
+    					score = (int) ((difficulty * startingScore) - (turns * 5) - (timeDifference));
+    					((TextView)findViewById(R.id.TextViewBlank)).setText("Tries: "+ turns + "     Time: " + timeDifference + " seconds");
     					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
     			        builder.setTitle("You Win!")
-    			        .setMessage("Would you like to play again?")
+    			        .setMessage("Your score was: " + score + "\nWould you like to play again?")
     			        .setCancelable(false)
     			        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
     			            public void onClick(DialogInterface dialog, int id) {
-    			                //TODO
+    			                newGame(x,y);
     			            }
     			        })
     			        .setNegativeButton("No",new DialogInterface.OnClickListener() {
